@@ -5,19 +5,21 @@ typedef struct
 	char *s;
 } dynamic_string;
 
-void concat(dynamic_string *dst, char *src);
+void create_dynamic_string(dynamic_string *ds, char *src);
 
 void free_dynamic_string(dynamic_string *ds);
 
-void create_dynamic_string(dynamic_string *ds, char *src);
-
 void reverse(dynamic_string *ds);
 
-void copy_dynamic_string(dynamic_string *src, dynamic_string *dst);
+void concat(dynamic_string *dst, char *src);
 
 void take(dynamic_string *src, dynamic_string *dst, unsigned int n);
 
+void drop(dynamic_string *src, dynamic_string *dst, unsigned int n);
+
 void filter(dynamic_string *src, dynamic_string *dst, int (*ptr) (char x));
+
+void map(dynamic_string *src, dynamic_string *dst, char (*ptr) (char x));
 
 #ifdef DYNAMIC_STRING_IMPL
 #include <string.h>
@@ -109,5 +111,25 @@ void filter(dynamic_string *src, dynamic_string *dst, int (*ptr) (char x))
 	}
 	dst->s = buffer;
 	dst->length = new_length;
+}
+
+void drop(dynamic_string *src, dynamic_string *dst, unsigned int n)
+{
+	copy_dynamic_string(src, dst);
+	dst->s = &src->s[n];
+	dst->length -= n;
+}
+
+void map(dynamic_string *src, dynamic_string *dst, char (*ptr) (char x))
+{
+	copy_dynamic_string(src, dst);
+	char buffer[src->length];
+	for(int i = 0; i < dst->length; i ++)
+	{
+		char c = (*ptr)(src->s[i]);
+		buffer[i] = c;
+	}
+	dst->s = buffer;
+	dst->s[dst->length] = '\0';
 }
 #endif
