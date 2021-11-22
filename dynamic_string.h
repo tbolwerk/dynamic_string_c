@@ -109,7 +109,9 @@ void filter(dynamic_string *src, dynamic_string *dst, int (*ptr) (char x))
 			new_length ++;
 		}
 	}
+	
 	dst->s = buffer;
+	dst->s[new_length] = '\0';
 	dst->length = new_length;
 }
 

@@ -23,7 +23,7 @@ int my_func(char x){
 
 int main(int argc, char **argv)
 {
-	dynamic_string ds;
+	dynamic_string ds = {};
 	create_dynamic_string(&ds, "Hello");
 
 	concat(&ds, ", ");
@@ -33,29 +33,29 @@ int main(int argc, char **argv)
 	printf("%s\n", ds.s);
 	free_dynamic_string(&ds);
 
-	create_dynamic_string(&ds, "new");
+	create_dynamic_string(&ds, "new");\
 	printf("length: %d\n", ds.length);
 	reverse(&ds);
-	dynamic_string ds2;	
+	dynamic_string ds2 = {};	
 	take(&ds, &ds2,2);	
 	printf("%s\n", ds2.s);
 	printf("%s\n", ds.s);
 
-	dynamic_string filter_ds;
+	dynamic_string filter_ds = {};
 	create_dynamic_string (&filter_ds, "123456789");
 	printf("%s\n", filter_ds.s);
-	dynamic_string ds3;
+	dynamic_string ds3 = {};
 	
 	filter(&filter_ds, &ds3, my_func);	
 	printf("filter:%s\n", ds3.s);
 	printf("filter:%s\n", filter_ds.s);
-	dynamic_string ds4;
+	dynamic_string ds4 = {};
 	drop(&filter_ds, &ds4, 5);
 
 	take(&ds4, &ds4, 1);
 	printf("%s\n", ds4.s);
 
-	dynamic_string ds5;
+	dynamic_string ds5 = {};
 	map(&filter_ds, &ds5, my_map);
 	printf("%d\n", filter_ds.length);
 	printf("input: %s", ds5.s);
