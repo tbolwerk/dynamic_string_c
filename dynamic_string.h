@@ -11,7 +11,7 @@ void free_dynamic_string(dynamic_string *ds);
 
 void reverse(dynamic_string *ds);
 
-void concat(dynamic_string *dst, char *src);
+void concat(char *src, dynamic_string *dst);
 
 void take(dynamic_string src, dynamic_string *dst, unsigned int n);
 
@@ -20,6 +20,8 @@ void drop(dynamic_string src, dynamic_string *dst, unsigned int n);
 void filter(dynamic_string src, dynamic_string *dst, int (*ptr) (char x));
 
 void map(dynamic_string src, dynamic_string *dst, char (*ptr) (char x));
+
+void sort(dynamic_string src, dynamic_string *dst);
 
 void print_dynamic_string(dynamic_string *ds);
 
@@ -53,7 +55,7 @@ void create_dynamic_string(dynamic_string *ds,  char *src)
 	ds->s = strcat(ds->s, src); 
 }
 
-void concat(dynamic_string *dst, char *src)
+void concat(char *src, dynamic_string *dst)
 {
 	unsigned int src_size = (strlen(src) / sizeof(char));
 	if(dst->capacity - dst->length < src_size){
@@ -93,7 +95,7 @@ void take(dynamic_string src, dynamic_string *dst, unsigned int n)
 
 void print_dynamic_string(dynamic_string *ds)
 {
-	printf("ds: {capacity: %d, length: %d, s: %s}", ds->capacity, ds->length, ds->s);
+	printf("ds: {capacity: %d, length: %d, s: %s}\n", ds->capacity, ds->length, ds->s);
 }
 
 void filter(dynamic_string src, dynamic_string *dst, int (*ptr) (char x))
@@ -131,5 +133,25 @@ void map(dynamic_string src, dynamic_string *dst, char (*ptr) (char x))
 		dst->s[i] = c;
 	}
 	dst->s[dst->length] = '\0';
+}
+
+void sort(dynamic_string src, dynamic_string *dst)
+{
+	copy_dynamic_string(src, dst);
+
+	for(int i = 0; i < src.length; i ++)
+	{
+		for(int j = 0; j < src.length; j ++)
+		{
+			if(dst->s[i] < dst->s[j])
+			{
+				char tmp = dst->s[i];
+				dst->s[i] = dst->s[j];
+				dst->s[j] = tmp;
+			}
+		}
+	}
+
+	dst->s[dst->length] = '\0';	
 }
 #endif
