@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "__bit_reference": "c",
+        "__split_buffer": "c",
+        "filesystem": "c",
+        "string": "c",
+        "vector": "c",
+        "__locale": "cpp",
+        "__string": "cpp",
+        "string_view": "cpp",
+        "sstream": "c"
+    }
+}

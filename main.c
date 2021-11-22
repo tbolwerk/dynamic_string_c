@@ -36,6 +36,16 @@ int main()
 	drop(ds, &xyz, 32);
 	print_dynamic_string(&xyz);
 
+	free_dynamic_string(&xyz);
+
+	reverse(ds, &ds);	
+	take(ds, &xyz, 3);
+	print_dynamic_string(&xyz);
+
+	reverse(xyz, &xyz);	
+	print_dynamic_string(&xyz);
+	
+
 	return 0;
 }
 

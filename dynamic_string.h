@@ -9,7 +9,7 @@ void create_dynamic_string(dynamic_string *ds, char *src);
 
 void free_dynamic_string(dynamic_string *ds);
 
-void reverse(dynamic_string *ds);
+void reverse(dynamic_string src, dynamic_string *dst);
 
 void concat(char *src, dynamic_string *dst);
 
@@ -67,22 +67,24 @@ void concat(char *src, dynamic_string *dst)
 	dst->length += src_size;
 }
 
-void reverse(dynamic_string *ds)
-{
-	char copy_s[ds->length];
-	for(int i = 0; i < ds->length; i ++){
-		copy_s[i] = ds->s[i];
-	}
-	for(int i = 0; i < ds->length; i ++){
-		ds->s[i] = copy_s[ds->length - i - 1];
-	}
-}
-
 void copy_dynamic_string(dynamic_string src, dynamic_string *dst)
 {
 	dst->length = src.length;
 	dst->capacity = src.capacity;
 	dst->s = src.s;
+}
+
+void reverse(dynamic_string src, dynamic_string *dst)
+{
+	char buffer[src.length];
+	int j = src.length;
+	for(int i = 0; i < src.length; i ++)
+	{
+		j = j - 1;
+		buffer[i] = src.s[j];
+	}
+	dst->s = buffer;
+	dst->s[src.length] = '\0';
 }
 
 void take(dynamic_string src, dynamic_string *dst, unsigned int n)
