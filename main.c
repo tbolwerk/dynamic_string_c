@@ -1,7 +1,11 @@
 #define DYNAMIC_STRING_IMPL
 #include "dynamic_string.h"
-
+#include <ctype.h> 
 #include <stdbool.h>
+
+char all_caps(char x){
+	return toupper(x);
+}
 
 char my_map(char x)
 {
@@ -37,7 +41,7 @@ int main(int argc, char **argv)
 	printf("length: %d\n", ds.length);
 	reverse(&ds);
 	dynamic_string ds2 = {};	
-	take(&ds, &ds2,2);	
+	take(ds, &ds2,2);	
 	printf("%s\n", ds2.s);
 	printf("%s\n", ds.s);
 
@@ -46,18 +50,24 @@ int main(int argc, char **argv)
 	printf("%s\n", filter_ds.s);
 	dynamic_string ds3 = {};
 	
-	filter(&filter_ds, &ds3, my_func);	
+	filter(filter_ds, &ds3, my_func);	
 	printf("filter:%s\n", ds3.s);
 	printf("filter:%s\n", filter_ds.s);
 	dynamic_string ds4 = {};
-	drop(&filter_ds, &ds4, 5);
+	drop(filter_ds, &ds4, 5);
 
-	take(&ds4, &ds4, 1);
+	take(ds4, &ds4, 1);
 	printf("%s\n", ds4.s);
 
 	dynamic_string ds5 = {};
-	map(&filter_ds, &ds5, my_map);
+	map(filter_ds, &ds5, my_map);
 	printf("%d\n", filter_ds.length);
 	printf("input: %s", ds5.s);
+
+	dynamic_string in_and_out = {};
+	create_dynamic_string(&in_and_out, "This is a test!");
+	map(in_and_out, &in_and_out, all_caps);
+	print_dynamic_string(&in_and_out);
+
 	return 0;
 }
