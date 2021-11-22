@@ -68,6 +68,12 @@ int main(int argc, char **argv)
 	create_dynamic_string(&in_and_out, "This is a test!");
 	map(in_and_out, &in_and_out, all_caps);
 	print_dynamic_string(&in_and_out);
-
+	printf("\n");
+	concat(&in_and_out, " and it works pretty well, even with concat!");
+	print_dynamic_string(&in_and_out);
+	printf("\n");
+	drop(in_and_out, &in_and_out, 16);
+	print_dynamic_string(&in_and_out);
+	printf("\n");
 	return 0;
 }
