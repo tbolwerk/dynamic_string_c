@@ -11,6 +11,22 @@ int no_spaces(char x){
 	return x != ' ';
 }
 
+int just_twan(char x){
+	switch (x)
+	{
+	case 'T':
+		return true;
+	case 'W':
+		return true;
+	case 'A':
+		return true;
+	case 'N':
+		return true;
+	default:
+		return false;
+	}
+}
+
 int main()
 {
 	dynamic_string ds = {};
@@ -18,8 +34,13 @@ int main()
 	create_dynamic_string(&ds, "The quick brown fox jumps over the lazy dog");
 	print_dynamic_string(&ds);
 
-	map(ds, &ds, all_caps);
+	map(&ds, all_caps);
 	print_dynamic_string(&ds);
+
+	dynamic_string twan = {};
+	create_dynamic_string(&twan, "");
+	filter(ds, &twan, just_twan);
+	print_dynamic_string(&twan);
 
 	filter(ds, &ds, no_spaces);
 	print_dynamic_string(&ds);
@@ -33,7 +54,7 @@ int main()
 	print_dynamic_string(&abc);
 
 	dynamic_string xyz = {};
-	drop(ds, &xyz, 32);
+	drop(&xyz, 32);
 	print_dynamic_string(&xyz);
 
 	free_dynamic_string(&xyz);

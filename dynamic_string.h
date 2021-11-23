@@ -15,11 +15,11 @@ void concat(char *src, dynamic_string *dst);
 
 void take(dynamic_string src, dynamic_string *dst, unsigned int n);
 
-void drop(dynamic_string src, dynamic_string *dst, unsigned int n);
+void drop(dynamic_string *ds, unsigned int n);
 
 void filter(dynamic_string src, dynamic_string *dst, int (*ptr) (char x));
 
-void map(dynamic_string src, dynamic_string *dst, char (*ptr) (char x));
+void map(dynamic_string *ds, char (*ptr) (char x));
 
 void sort(dynamic_string src, dynamic_string *dst);
 
@@ -119,22 +119,22 @@ void filter(dynamic_string src, dynamic_string *dst, int (*ptr) (char x))
 	dst->length = new_length;
 }
 
-void drop(dynamic_string src, dynamic_string *dst, unsigned int n)
+void drop(dynamic_string *ds, unsigned int n)
 {
-	copy_dynamic_string(src, dst);
-	dst->s = &src.s[n];
-	dst->length -= n;
+	ds->s = &ds->s[n];
+	ds->length -= n;
 }
 
-void map(dynamic_string src, dynamic_string *dst, char (*ptr) (char x))
+void map(dynamic_string *ds, char (*ptr) (char x))
 {
-	copy_dynamic_string(src, dst);
-	for(int i = 0; i < dst->length; i ++)
+	char buffer[ds->capacity];
+	for(size_t i = 0; i < ds->length; i ++)
 	{
-		char c = (*ptr)(src.s[i]);
-		dst->s[i] = c;
+		char c = (*ptr)(ds->s[i]);
+		buffer[i] = c;
 	}
-	dst->s[dst->length] = '\0';
+	ds->s = buffer;
+	ds->s[ds->length] = '\0';
 }
 
 void sort(dynamic_string src, dynamic_string *dst)
