@@ -45,6 +45,7 @@ int main()
 	reverse(xyz, &xyz);	
 	print_dynamic_string(&xyz);
 	
+	printf("%s", toString(xyz));
 
 	return 0;
 }

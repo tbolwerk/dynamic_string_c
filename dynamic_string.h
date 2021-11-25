@@ -1,3 +1,7 @@
+/*
+This library copies the src dynamic_string in order to prevent modifactions during execution of the function. 
+*/
+
 typedef struct
 {
 	unsigned int capacity;
@@ -24,6 +28,8 @@ void map(dynamic_string src, dynamic_string *dst, char (*ptr) (char x));
 void sort(dynamic_string src, dynamic_string *dst);
 
 void print_dynamic_string(dynamic_string *ds);
+
+char* toString(dynamic_string src);
 
 #ifdef DYNAMIC_STRING_IMPL
 #include <string.h>
@@ -155,5 +161,12 @@ void sort(dynamic_string src, dynamic_string *dst)
 	}
 
 	dst->s[dst->length] = '\0';	
+}
+
+
+char* toString(dynamic_string src)
+{
+	assert(src.s != NULL);
+	return src.s;
 }
 #endif
